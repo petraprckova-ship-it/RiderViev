@@ -152,7 +152,7 @@ class VideoWidget(QWidget):
 class VideoDisplay(QWidget):
     """Hlavní video display panel"""
     
-    fullscreen_toggled = pyqtSignal(bool)
+    fullscreen_toggled = Signal(bool)
     
     def __init__(self, config: Config):
         super().__init__()
