@@ -1,0 +1,39 @@
+# Docker Compose pro Person Tracker
+
+version: '3.8'
+
+services:
+  desktop:
+    build: .
+    image: person-tracker:latest
+    container_name: person-tracker-desktop
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./config:/app/config
+      - ./models:/app/models
+      - ./logs:/app/logs
+    devices:
+      - /dev/video0:/dev/video0
+    network_mode: host
+    stdin_open: true
+    tty: true
+    command: python main.py
+
+  # Pro vývoj - mock robot
+  robot-mock:
+    build: 
+      context: .
+      dockerfile: Dockerfile.robot
+    image: person-tracker-robot:latest
+    container_name: person-tracker-robot-mock
+    ports:
+      - "5555:5555"
+      - "5556:5556"
+      - "8554:8554"
+    volumes:
+      - ./robot:/app/robot
+      - ./logs:/app/logs
+    command: python robot/robot_service.py --mock

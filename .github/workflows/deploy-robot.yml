@@ -1,0 +1,40 @@
+name: Robot Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      robot_ip:
+        description: 'IP adresa robota'
+        required: true
+        default: '192.168.1.100'
+
+jobs:
+  deploy:
+    name: Deploy na robot
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout kód
+      uses: actions/checkout@v4
+      
+    - name: Nastavení SSH klíče
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.ROBOT_SSH_KEY }}
+        
+    - name: Přenos souborů
+      run: |
+        rsync -avz --exclude='.git' \
+          --exclude='__pycache__' \
+          --exclude='*.pyc' \
+          robot/ pi@${{ github.event.inputs.robot_ip }}:/opt/person-tracker/
+          
+    - name: Restart služby
+      run: |
+        ssh pi@${{ github.event.inputs.robot_ip }} \
+          'sudo systemctl restart person-tracker'
+          
+    - name: Kontrola stavu
+      run: |
+        ssh pi@${{ github.event.inputs.robot_ip }} \
+          'sudo systemctl status person-tracker'

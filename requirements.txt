@@ -1,0 +1,66 @@
+# Core dependencies
+PyQt6==6.6.1
+PyQt6-Charts==6.6.0
+PyQt6-WebEngine==6.6.0
+
+# Async runtime
+uvloop==0.19.0; sys_platform != 'win32'
+
+# Computer Vision & ML
+ultralytics==8.1.20
+opencv-python==4.9.0.80
+opencv-contrib-python==4.9.0.80
+numpy==1.26.3
+torch==2.2.0
+torchvision==0.17.0
+onnx==1.15.0
+onnxruntime-gpu==1.17.0  # Pro NVIDIA GPU
+# onnxruntime-directml==1.17.0  # Pro AMD GPU (alternative)
+
+# TensorRT (instalovat ručně pro NVIDIA)
+# tensorrt>=8.6.0
+
+# Tracking
+lapx==0.5.5  # lap alternativa pro Python 3.12+
+filterpy==1.4.5
+scipy==1.12.0
+
+# Depth estimation
+timm==0.9.12
+einops==0.7.0
+
+# Video streaming
+# GStreamer Python bindings (instalovat přes systémový package manager)
+# Linux: sudo apt install python3-gst-1.0 gstreamer1.0-plugins-{base,good,bad,ugly} gstreamer1.0-rtsp
+# Windows: https://gstreamer.freedesktop.org/download/
+
+# Network communication
+pyzmq==25.1.2
+protobuf==4.25.2
+paramiko==3.4.0
+
+# Image processing
+Pillow==10.2.0
+imageio==2.33.1
+
+# Configuration
+PyYAML==6.0.1
+pydantic==2.6.0
+pydantic-settings==2.1.0
+python-dotenv==1.0.1
+
+# Utilities
+loguru==0.7.2
+tqdm==4.66.1
+psutil==5.9.8
+colorama==0.4.6
+
+# GUI utilities
+darkdetect==0.8.0
+pyqtgraph==0.13.3
+
+# Math & science
+sympy==1.12
+
+# File handling
+appdirs==1.4.4

@@ -1,0 +1,111 @@
+═══════════════════════════════════════════════════════════════
+  PERSON TRACKER - ONE-LINE INSTALLATION FOR WINDOWS
+═══════════════════════════════════════════════════════════════
+
+🚀 METODA 1: PowerShell - KOMPLETNÍ (stáhne projekt + nainstaluje)
+───────────────────────────────────────────────────────────────
+Zkopírujte tento příkaz a vložte do PowerShell:
+
+git clone https://github.com/petraprckova-ship-it/RiderViev.git; cd RiderViev; python -m venv venv; .\venv\Scripts\Activate.ps1; pip install -r requirements.txt; python main.py
+
+NEBO stáhněte a spusťte instalační skript:
+
+irm https://raw.githubusercontent.com/petraprckova-ship-it/RiderViev/main/QUICK_INSTALL.ps1 | iex
+
+───────────────────────────────────────────────────────────────
+
+⚡ METODA 1B: Pokud už máte projekt stažený:
+───────────────────────────────────────────────────────────────
+cd C:\cesta\k\projektu\RiderViev; powershell -ExecutionPolicy Bypass -File QUICK_INSTALL.ps1
+
+NEBO:
+
+python -m venv venv && .\venv\Scripts\Activate.ps1 && pip install -r requirements.txt && python main.py
+
+───────────────────────────────────────────────────────────────
+
+🔧 METODA 2: Command Prompt (CMD) - KOMPLETNÍ
+───────────────────────────────────────────────────────────────
+Zkopírujte tento příkaz a vložte do CMD (stáhne projekt + nainstaluje):
+
+git clone https://github.com/petraprckova-ship-it/RiderViev.git && cd RiderViev && python -m venv venv && call venv\Scripts\activate.bat && pip install -r requirements.txt && python main.py
+
+───────────────────────────────────────────────────────────────
+
+🔧 METODA 2B: Pokud už máte projekt stažený (CMD):
+───────────────────────────────────────────────────────────────
+python -m venv venv && call venv\Scripts\activate.bat && pip install -r requirements.txt && python main.py
+
+NEBO s kompletním ověřením:
+
+python -m venv venv && call venv\Scripts\activate.bat && python -m pip install --upgrade pip && pip install -r requirements.txt && python scripts\download_models.py && set PYTHONPATH=%CD% && python scripts\smoke_test.py && python main.py
+
+───────────────────────────────────────────────────────────────
+
+⚡ METODA 3: Batch Script
+───────────────────────────────────────────────────────────────
+Pokud máte projekt stažený, jen poklikejte na:
+
+QUICK_INSTALL.bat
+
+NEBO spusťte v CMD:
+
+cd C:\cesta\k\projektu\RiderViev
+QUICK_INSTALL.bat
+
+───────────────────────────────────────────────────────────────
+
+📦 METODA 4: Ruční instalace (krok po kroku)
+───────────────────────────────────────────────────────────────
+
+1. Stáhněte projekt:
+   git clone https://github.com/petraprckova-ship-it/RiderViev.git
+   cd RiderViev
+
+2. Vytvořte virtuální prostředí:
+   python -m venv venv
+
+3. Aktivujte venv:
+   venv\Scripts\activate
+
+4. Nainstalujte závislosti:
+   pip install -r requirements.txt
+
+5. Stáhněte model:
+   python scripts\download_models.py
+
+6. Spusťte aplikaci:
+   python main.py
+
+═══════════════════════════════════════════════════════════════
+
+❓ FAQ - Časté problémy
+───────────────────────────────────────────────────────────────
+
+Q: "python není rozpoznán jako příkaz"
+A: Python není v PATH. Přeinstalujte Python a zaškrtněte "Add to PATH"
+   NEBO použijte: py -m venv venv
+
+Q: "Nelze spustit skripty (Execution Policy)"
+A: Spusťte PowerShell jako Administrator a zadejte:
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+Q: "ModuleNotFoundError: No module named 'PyQt6'"
+A: Aktivujte venv před spuštěním:
+   venv\Scripts\activate
+   python main.py
+
+Q: "ImportError: DLL load failed"
+A: Nainstalujte Visual C++ Redistributable:
+   https://aka.ms/vs/17/release/vc_redist.x64.exe
+
+═══════════════════════════════════════════════════════════════
+
+📚 Další zdroje:
+───────────────────────────────────────────────────────────────
+- Detailní návod: docs\windows_installation.md
+- Rychlý start: README.md
+- Dokumentace: docs\
+- GitHub: https://github.com/petraprckova-ship-it/RiderViev
+
+═══════════════════════════════════════════════════════════════

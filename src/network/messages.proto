@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package person_tracker;
+
+// Příkaz pro pohyb robota
+message MotionCommand {
+    double linear_velocity = 1;   // m/s (-1.0 až 1.0)
+    double angular_velocity = 2;  // rad/s (-3.14 až 3.14)
+    uint64 timestamp = 3;          // Unix timestamp v ms
+    string command_id = 4;         // Unikátní ID příkazu
+}
+
+// Telemetrická data z robota
+message Telemetry {
+    // Timestamp
+    uint64 timestamp = 1;
+    
+    // Pohyb
+    double linear_velocity = 2;
+    double angular_velocity = 3;
+    double left_wheel_rpm = 4;
+    double right_wheel_rpm = 5;
+    
+    // Orientace (IMU)
+    double pitch = 6;
+    double roll = 7;
+    double yaw = 8;
+    double gyro_x = 9;
+    double gyro_y = 10;
+    double gyro_z = 11;
+    double accel_x = 12;
+    double accel_y = 13;
+    double accel_z = 14;
+    
+    // Senzory vzdálenosti (cm)
+    double ultrasonic_front = 15;
+    double ultrasonic_left = 16;
+    double ultrasonic_right = 17;
+    double ultrasonic_back = 18;
+    
+    // Baterie
+    double battery_voltage = 19;
+    double battery_current = 20;
+    double battery_percentage = 21;
+    
+    // Teploty (°C)
+    double cpu_temperature = 22;
+    double motor_temperature = 23;
+    
+    // Stav
+    string robot_state = 24;  // idle, moving, error
+    repeated string errors = 25;
+}
+
+// Stav připojení
+message ConnectionStatus {
+    bool connected = 1;
+    uint64 timestamp = 2;
+    double latency_ms = 3;
+}
+
+// Požadavek na konfiguraci
+message ConfigRequest {
+    string config_key = 1;
+    string config_value = 2;
+}
+
+// Odpověď na konfiguraci
+message ConfigResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// Emergency stop
+message EmergencyStop {
+    bool stop = 1;
+    string reason = 2;
+    uint64 timestamp = 3;
+}
+
+// Heartbeat pro keepalive
+message Heartbeat {
+    uint64 timestamp = 1;
+    string sender_id = 2;
+}
+
+// Acknowledge pro potvrzení příjmu
+message Acknowledgment {
+    string command_id = 1;
+    bool received = 2;
+    uint64 timestamp = 3;
+}

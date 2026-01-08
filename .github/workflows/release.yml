@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout kód
+      uses: actions/checkout@v4
+      
+    - name: Nastavení Pythonu
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Instalace závislostí
+      run: |
+        pip install -r requirements.txt
+        pip install pyinstaller
+        
+    - name: Build executable
+      run: |
+        pyinstaller --name PersonTracker \
+          --windowed \
+          --icon=assets/icon.ico \
+          --add-data="config:config" \
+          --add-data="models:models" \
+          main.py
+          
+    - name: Zabalení release
+      run: |
+        cd dist
+        tar -czf PersonTracker-Linux-x86_64.tar.gz PersonTracker/
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/PersonTracker-Linux-x86_64.tar.gz
+          README.md
+          LICENSE
+        body: |
+          ## Person Tracker Release ${{ github.ref_name }}
+          
+          ### Instalace
+          
+          1. Stáhněte `PersonTracker-Linux-x86_64.tar.gz`
+          2. Rozbalte: `tar -xzf PersonTracker-Linux-x86_64.tar.gz`
+          3. Spusťte: `./PersonTracker/PersonTracker`
+          
+          ### Co je nového
+          
+          - TODO: Přidejte changelog
+          
+          ### Dokumentace
+          
+          Viz [docs/installation.md](docs/installation.md)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

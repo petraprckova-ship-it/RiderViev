@@ -1,0 +1,189 @@
+# Person Tracker - Výchozí konfigurace
+
+# Aplikace
+app:
+  name: "Person Tracker"
+  version: "1.0.0"
+  language: "cs"  # cs, en
+  theme: "dark"  # dark, light
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  
+# Video stream
+video:
+  resolution:
+    width: 640
+    height: 480
+  fps: 30
+  codec: "h264"  # h264, h265, mjpeg
+  bitrate: 2000000  # 2 Mbps
+  keyframe_interval: 30
+  protocol: "rtsp"  # rtsp, http
+  port: 8554
+  latency_mode: "low"  # ultra-low, low, normal
+  
+# ML modely
+ml:
+  detection:
+    model: "yolo11s"  # yolo11n, yolo11s, yolo11m
+    confidence_threshold: 0.5
+    nms_iou_threshold: 0.45
+    device: "cuda:0"  # cuda:0, cpu
+    backend: "tensorrt"  # tensorrt, onnx, pytorch
+    fp16: true
+    batch_size: 1
+    
+  tracking:
+    algorithm: "bytetrack"
+    track_buffer: 30
+    match_threshold: 0.8
+    min_track_length: 5
+    
+  depth:
+    enabled: false
+    model: "depth_anything_v2_small"  # depth_anything_v2_small, midas_v31
+    
+  pose:
+    enabled: false
+    model: "mediapipe"
+    
+# Distance estimation
+distance:
+  method: "bbox"  # bbox, depth, fusion
+  target_min: 1.0  # metry
+  target_max: 2.5  # metry
+  avg_person_height: 1.7  # metry
+  focal_length: null  # automaticky kalibrovat
+  
+# Řízení motoru
+control:
+  frequency: 50  # Hz
+  watchdog_timeout: 0.5  # sekundy
+  
+  pid:
+    linear:
+      kp: 1.0
+      ki: 0.1
+      kd: 0.05
+      output_limit: 1.0
+    angular:
+      kp: 2.0
+      ki: 0.2
+      kd: 0.1
+      output_limit: 1.0
+      
+  profiles:
+    cautious:
+      max_speed: 0.3  # m/s
+      max_turn_rate: 30  # stupně/s
+      acceleration: 0.2  # m/s²
+      deceleration: 0.3  # m/s²
+    normal:
+      max_speed: 0.6
+      max_turn_rate: 60
+      acceleration: 0.4
+      deceleration: 0.5
+    aggressive:
+      max_speed: 1.0
+      max_turn_rate: 90
+      acceleration: 0.6
+      deceleration: 0.8
+      
+  default_profile: "normal"
+  
+# Bezpečnost
+safety:
+  zones:
+    red: 0.30  # metry - nouzové zastavení
+    yellow: 0.60  # metry - zpomalení
+    green: 1000.0  # metry - normální provoz
+    
+  obstacle_avoidance:
+    enabled: true
+    strategy: "steer_around"  # stop, reverse, steer_around, alert
+    prediction_horizon: 1.5  # sekundy
+    clearance_margin: 0.15  # metry
+    
+  emergency:
+    stop_type: "soft"  # hard, soft, coast
+    connection_lost_action: "stop"  # stop, continue, patrol
+    tilt_threshold: 30  # stupně
+    
+  geofencing:
+    enabled: false
+    boundary: []  # polygon souřadnice
+    action: "stop"  # stop, reverse, turn
+    warning_distance: 0.2  # metry
+    
+# Síťová komunikace
+network:
+  command_port: 5555
+  telemetry_port: 5556
+  keepalive_interval: 1.0  # sekundy
+  reconnect_interval: 5.0  # sekundy
+  reconnect_max_attempts: 10
+  tcp_nodelay: true
+  
+# UI
+ui:
+  window:
+    width: 1920
+    height: 1080
+    fullscreen: false
+    
+  colors:
+    # Catppuccin Mocha (dark theme)
+    dark:
+      background: "#1e1e2e"
+      surface: "#313244"
+      overlay: "#45475a"
+      text: "#cdd6f4"
+      subtext: "#bac2de"
+      primary: "#89b4fa"
+      success: "#a6e3a1"
+      warning: "#f9e2af"
+      error: "#f38ba8"
+      
+    # Catppuccin Latte (light theme)
+    light:
+      background: "#eff1f5"
+      surface: "#e6e9ef"
+      overlay: "#ccd0da"
+      text: "#4c4f69"
+      subtext: "#6c6f85"
+      primary: "#1e66f5"
+      success: "#40a02b"
+      warning: "#df8e1d"
+      error: "#d20f39"
+      
+  fonts:
+    heading: "Inter"
+    body: "Inter"
+    mono: "JetBrains Mono"
+    
+  overlays:
+    bbox_thickness: 2
+    bbox_alpha: 0.8
+    zone_alpha: 0.3
+    trajectory_length: 2.0  # sekundy
+    
+  telemetry:
+    update_interval: 1.0  # sekundy
+    chart_window: 60  # sekundy
+    
+# Záznam
+recording:
+  save_directory: "~/PersonTracker/recordings"
+  format: "mp4"  # mp4, mkv, avi
+  quality: "stream"  # stream, high
+  include_overlays: true
+  include_telemetry: true
+  auto_record: false
+  
+# Debugging
+debug:
+  show_fps: true
+  show_latency: true
+  show_mini_map: true
+  save_frames: false
+  save_detections: false
+  profiling: false
