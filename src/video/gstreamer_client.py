@@ -42,8 +42,8 @@ class GStreamerClient:
         # Inicializace GStreamer
         Gst.init(None)
         
-        self.pipeline: Optional[Gst.Pipeline] = None
-        self.appsink: Optional[GstApp.AppSink] = None
+        self.pipeline: Optional["Gst.Pipeline"] = None
+        self.appsink: Optional["GstApp.AppSink"] = None
         self.is_running = False
         
         self._frame_count = 0
@@ -109,7 +109,7 @@ class GStreamerClient:
         self.appsink = None
         self.is_running = False
         
-    def _on_new_sample(self, sink: GstApp.AppSink) -> Gst.FlowReturn:
+    def _on_new_sample(self, sink: "GstApp.AppSink") -> "Gst.FlowReturn":
         """Callback pro nový snímek"""
         sample = sink.emit("pull-sample")
         
