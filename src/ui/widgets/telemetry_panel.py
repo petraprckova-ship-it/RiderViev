@@ -2,13 +2,13 @@
 Telemetry Panel - pravý panel s telemetrií a grafy
 """
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
     QGroupBox, QTabWidget, QScrollArea, QProgressBar
 )
-from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis
-from PyQt6.QtGui import QPainter
+from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis
+from PySide6.QtGui import QPainter
 from loguru import logger
 from collections import deque
 import time

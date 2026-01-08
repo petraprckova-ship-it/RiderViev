@@ -2,9 +2,9 @@
 Video Display - střední panel s video streamem
 """
 
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton
-from PyQt6.QtCore import Qt, QTimer, pyqtSignal, QRect
-from PyQt6.QtGui import QImage, QPixmap, QPainter, QPen, QColor, QFont
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton
+from PySide6.QtCore import Qt, QTimer, Signal, QRect
+from PySide6.QtGui import QImage, QPixmap, QPainter, QPen, QColor, QFont
 from loguru import logger
 import numpy as np
 import cv2

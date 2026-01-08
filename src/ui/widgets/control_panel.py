@@ -2,12 +2,12 @@
 Control Panel - levý panel s ovládáním robota
 """
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QComboBox, QLineEdit, QGroupBox, QSlider, QSpinBox
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QTimer
-from PyQt6.QtGui import QIntValidator
+from PySide6.QtCore import Qt, Signal, QTimer
+from PySide6.QtGui import QIntValidator
 from loguru import logger
 
 from ...config import Config, ProfileManager, RobotProfile
@@ -17,7 +17,7 @@ from pathlib import Path
 class ConnectionWidget(QWidget):
     """Widget pro připojení k robotu"""
     
-    connection_changed = pyqtSignal(bool)  # True = připojeno
+    connection_changed = Signal(bool)  # True = připojeno
     
     def __init__(self, config: Config):
         super().__init__()
@@ -153,7 +153,7 @@ class ConnectionWidget(QWidget):
 class ModeSelector(QWidget):
     """Widget pro výběr režimu"""
     
-    mode_changed = pyqtSignal(str)
+    mode_changed = Signal(str)
     
     def __init__(self, config: Config):
         super().__init__()
@@ -225,7 +225,7 @@ class ModeSelector(QWidget):
 class SpeedControl(QWidget):
     """Widget pro ovládání rychlosti"""
     
-    speed_changed = pyqtSignal(float)  # 0.0 - 1.0
+    speed_changed = Signal(float)  # 0.0 - 1.0
     
     def __init__(self, config: Config):
         super().__init__()

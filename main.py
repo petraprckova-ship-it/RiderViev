@@ -7,8 +7,8 @@ import sys
 import asyncio
 from pathlib import Path
 from loguru import logger
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import Qt
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import Qt
 
 # Import konfigurace
 from src.config import init_config, get_config

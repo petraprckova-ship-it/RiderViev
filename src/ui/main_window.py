@@ -2,12 +2,12 @@
 Hlavní okno aplikace
 """
 
-from PyQt6.QtWidgets import (
+from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QSplitter, QStatusBar, QMessageBox
 )
-from PyQt6.QtCore import Qt, QTimer, pyqtSignal
-from PyQt6.QtGui import QAction, QKeySequence, QCloseEvent
+from PySide6.QtCore import Qt, QTimer, Signal
+from PySide6.QtGui import QAction, QKeySequence
 from loguru import logger
 
 from ..config import Config
@@ -23,9 +23,9 @@ class MainWindow(QMainWindow):
     """
 
     # Signály
-    connection_changed = pyqtSignal(bool)  # True = připojeno
-    mode_changed = pyqtSignal(str)  # Změna režimu
-    emergency_stop_triggered = pyqtSignal()
+    connection_changed = Signal(bool)  # True = připojeno
+    mode_changed = Signal(str)  # Změna režimu
+    emergency_stop_triggered = Signal()
 
     def __init__(self, config: Config):
         super().__init__()
