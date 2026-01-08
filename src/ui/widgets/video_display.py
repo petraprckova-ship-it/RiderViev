@@ -10,7 +10,12 @@ import numpy as np
 import cv2
 
 from ...config import Config
-from ...video.gstreamer_client import GStreamerClient
+
+try:
+    from ...video.gstreamer_client import GStreamerClient, GSTREAMER_AVAILABLE
+except ImportError:
+    GStreamerClient = None
+    GSTREAMER_AVAILABLE = False
 
 
 class VideoWidget(QWidget):
@@ -261,6 +266,15 @@ class VideoDisplay(QWidget):
         """Spuštění RTSP streamu"""
         if self.is_streaming:
             self.stop_stream()
+        
+        if not GSTREAMER_AVAILABLE:
+            logger.warning("GStreamer není k dispozici - video streaming není podporován")
+            self.video_widget.setText(
+                "Video streaming není k dispozici\n\n"
+                "GStreamer není nainstalován.\n"
+                "Stáhněte z: gstreamer.freedesktop.org"
+            )
+            return
             
         try:
             logger.info(f"Připojuji se k RTSP: {rtsp_url}")

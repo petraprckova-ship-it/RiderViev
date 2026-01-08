@@ -2,11 +2,17 @@
 GStreamer video streaming client
 """
 
-import gi
-gi.require_version('Gst', '1.0')
-gi.require_version('GstApp', '1.0')
+try:
+    import gi
+    gi.require_version('Gst', '1.0')
+    gi.require_version('GstApp', '1.0')
+    from gi.repository import Gst, GstApp
+    GSTREAMER_AVAILABLE = True
+except (ImportError, ValueError) as e:
+    GSTREAMER_AVAILABLE = False
+    Gst = None
+    GstApp = None
 
-from gi.repository import Gst, GstApp
 import numpy as np
 from loguru import logger
 from typing import Optional, Callable
@@ -24,6 +30,12 @@ class GStreamerClient:
             rtsp_url: RTSP URL (např. rtsp://192.168.1.100:8554/video)
             on_frame: Callback funkce pro nové snímky (frame: np.ndarray)
         """
+        if not GSTREAMER_AVAILABLE:
+            raise RuntimeError(
+                "GStreamer není k dispozici. "
+                "Na Windows nainstalujte GStreamer z: https://gstreamer.freedesktop.org/download/"
+            )
+        
         self.rtsp_url = rtsp_url
         self.on_frame = on_frame
         
